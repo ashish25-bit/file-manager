@@ -16,6 +16,11 @@ const TERMINAL = {
     darwin: 'rm',
     linux: 'rm',
     win32: 'del'
+  },
+  move: {
+    darwin: 'mv',
+    linux: 'mv',
+    win32: 'move'
   }
 };
 Object.freeze(TERMINAL);
@@ -24,6 +29,10 @@ const ACTIONS_MSG = {
   delete: {
     confirm: 'Confirm',
     cancel: 'Cancel'
+  },
+  moveType: {
+    folder: "folder",
+    file: "file"
   }
 }
 Object.freeze(ACTIONS_MSG);

@@ -7,6 +7,7 @@ const deleteDirectoryRegisterFunction = require('./registerFunctions/deleteDirec
 const deleteFileRegisterFunction = require('./registerFunctions/deleteFile');
 const renameFileRegisterFunction = require('./registerFunctions/renameFile');
 const renameDirectoryRegisterFunction = require('./registerFunctions/renameDirectory');
+const moveFileOrDirectory = require("./utils/moveFileOrDirectory");
 
 /**
  * @param {vscode.ExtensionContext} context
@@ -44,12 +45,44 @@ async function activate(context) {
     renameDirectoryRegisterFunction
   )
 
+  let moveFileDisposable = vscode.commands.registerCommand(
+    "file.moveFile",
+    async function() {
+      try {
+        if (vscode.workspace.workspaceFolders === undefined)
+          return;
+
+        await moveFileOrDirectory('file');
+      }
+      catch (err) {
+        vscode.window.showErrorMessage(err.message);
+      }
+    }
+  )
+
+  let moveDirectoryDisposable = vscode.commands.registerCommand(
+    "file.moveDirectory",
+    async function() {
+      try {
+        if (vscode.workspace.workspaceFolders === undefined)
+          return;
+
+        await moveFileOrDirectory('folder');
+      }
+      catch (err) {
+        vscode.window.showErrorMessage(err.message);
+      }
+    }
+  )
+
   context.subscriptions.push(createNewFileDisposable);
   context.subscriptions.push(createNewDirectoryDisposable);
   context.subscriptions.push(deleteDirectoryDisposable);
   context.subscriptions.push(deleteFileDisposable);
   context.subscriptions.push(renameFileDisposable);
   context.subscriptions.push(renameDirectoryDisposable);
+  context.subscriptions.push(moveFileDisposable);
+  context.subscriptions.push(moveDirectoryDisposable);
 }
 
 function deactivate() {}

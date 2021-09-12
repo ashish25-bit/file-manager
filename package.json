@@ -2,7 +2,7 @@
 	"name": "file-manager",
 	"displayName": "file-manager",
 	"description": "",
-	"version": "1.0.1",
+	"version": "1.1.2",
 	"engines": {
 		"vscode": "^1.60.0"
 	},
@@ -32,7 +32,9 @@
 		"onCommand:file.deleteDirectory",
 		"onCommand:file.deleteFile",
 		"onCommand:file.renameFile",
-		"onCommand:file.renameDirectory"
+		"onCommand:file.renameDirectory",
+		"onCommand:file.moveFile",
+		"onCommand:file.moveDirectory"
 	],
 	"main": "./extension.js",
 	"contributes": {
@@ -60,6 +62,14 @@
 			{
 				"command": "file.renameDirectory",
 				"title": "Rename Directory"
+			},
+			{
+				"command": "file.moveDirectory",
+				"title": "Move Directory"
+			},
+			{
+				"command": "file.moveFile",
+				"title": "Move File"
 			}
 		]
 	},
