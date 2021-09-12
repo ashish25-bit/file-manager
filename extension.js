@@ -5,6 +5,8 @@ const createFileRegisterFunction = require('./registerFunctions/createFile');
 const createDirectoryRegisterFunction = require('./registerFunctions/createDirectory');
 const deleteDirectoryRegisterFunction = require('./registerFunctions/deleteDirectory');
 const deleteFileRegisterFunction = require('./registerFunctions/deleteFile');
+const renameFileRegisterFunction = require('./registerFunctions/renameFile');
+const renameDirectoryRegisterFunction = require('./registerFunctions/renameDirectory');
 
 /**
  * @param {vscode.ExtensionContext} context
@@ -32,10 +34,22 @@ async function activate(context) {
     deleteFileRegisterFunction
   )
 
+  let renameFileDisposable = vscode.commands.registerCommand(
+    "file.renameFile",
+    renameFileRegisterFunction
+  )
+
+  let renameDirectoryDisposable = vscode.commands.registerCommand(
+    "file.renameDirectory",
+    renameDirectoryRegisterFunction
+  )
+
   context.subscriptions.push(createNewFileDisposable);
   context.subscriptions.push(createNewDirectoryDisposable);
   context.subscriptions.push(deleteDirectoryDisposable);
   context.subscriptions.push(deleteFileDisposable);
+  context.subscriptions.push(renameFileDisposable);
+  context.subscriptions.push(renameDirectoryDisposable);
 }
 
 function deactivate() {}
