@@ -35,16 +35,24 @@ const createFileRegisterFunction = async function () {
     for (const file of inputFiles) {
       // const filePath = `${selectedFolder.label}\\${file}`;
       const filePath = path.join(selectedFolder.label, file);
-      const result = await createFile(filePath);
 
-      if (result.error) {
-        vscode.window.showErrorMessage(result.message);
+      // checking whether the filepath is within the workspace
+      if (!filePath.startsWith(base)) {
+        vscode.window.showErrorMessage(`The filePath: ${filePath} is not in the workspace: ${base}`);
       }
-      // if file is created successfully then create open the file
+
       else {
-        const uri = vscode.Uri.file(filePath);
-        let doc = await vscode.workspace.openTextDocument(uri);
-        await vscode.window.showTextDocument(doc, { preview: false });
+        const result = await createFile(filePath);
+
+        if (result.error) {
+          vscode.window.showErrorMessage(result.message);
+        }
+        // if file is created successfully then create open the file
+        else {
+          const uri = vscode.Uri.file(filePath);
+          let doc = await vscode.workspace.openTextDocument(uri);
+          await vscode.window.showTextDocument(doc, { preview: false });
+        }
       }
     }
   }

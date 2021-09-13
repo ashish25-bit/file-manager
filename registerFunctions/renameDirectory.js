@@ -10,7 +10,7 @@ const renameDirectoryRegisterFunction = async function () {
     const base = vscode.workspace.workspaceFolders[0].uri._fsPath;
     const folders = await getCurrentDirectoryFolders(base);
 
-    await rename(folders);
+    await rename(folders, base);
   }
   catch (err) {
     console.log(err);

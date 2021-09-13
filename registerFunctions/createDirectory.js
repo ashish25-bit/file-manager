@@ -33,10 +33,16 @@ const createDirectoryRegisterFunction = async function() {
     for (const directory of directories) {
       // const dirPath = `${selectedFolder.label}\\${directory}`;
       const dirPath = path.join(selectedFolder.label, directory);
-      const result = await createDirectory(dirPath);
 
-      if (result.error) {
-        vscode.window.showErrorMessage(result.message);
+      if (!dirPath.startsWith(base)) {
+        vscode.window.showErrorMessage(`Selected path: ${dirPath} is out of the current working directory ${base}`);
+      }
+      else {
+        const result = await createDirectory(dirPath);
+
+        if (result.error) {
+          vscode.window.showErrorMessage(result.message);
+        }
       }
     }
   }

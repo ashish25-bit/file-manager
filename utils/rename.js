@@ -1,7 +1,7 @@
 const vscode = require("vscode");
 const path = require("path");
 
-async function renameFile(data) {
+async function renameFile(data, base) {
   try {
     const selectedData = await vscode.window.showQuickPick(data, {
       matchOnDetail: true,
@@ -20,7 +20,9 @@ async function renameFile(data) {
     const sourceUri = vscode.Uri.file(selectedData.label);
     const targetUri = vscode.Uri.file(path.join(path.dirname(selectedData.label), input));
 
-    console.log(sourceUri, targetUri);
+    if (!targetUri.fsPath.startsWith(base)) {
+      throw new Error(`New name: ${targetUri.fsPath} is outside the workspace: ${base}`);
+    }
     await vscode.workspace.fs.rename(sourceUri, targetUri);
   }
   catch (err) {

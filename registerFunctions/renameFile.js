@@ -10,10 +10,9 @@ const renameFileRegisterFunction = async function () {
     const base = vscode.workspace.workspaceFolders[0].uri._fsPath;
     const files = await getCurrentDirectoryFiles(base);
 
-    await rename(files);
+    await rename(files, base);
   }
   catch (err) {
-    console.log(err);
     vscode.window.showErrorMessage(err.message);
   }
 }
