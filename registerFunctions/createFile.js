@@ -2,6 +2,7 @@ const vscode = require("vscode");
 const getCurrentDirectoryFolders = require('../utils/getFolders');
 const createFile = require('../utils/createFile');
 const { PATTERN } = require('../constants');
+const path = require("path");
 
 const createFileRegisterFunction = async function () {
   try {
@@ -32,11 +33,18 @@ const createFileRegisterFunction = async function () {
 
     // creating new files
     for (const file of inputFiles) {
-      const filePath = `${selectedFolder.label}\\${file}`;
+      // const filePath = `${selectedFolder.label}\\${file}`;
+      const filePath = path.join(selectedFolder.label, file);
       const result = await createFile(filePath);
 
       if (result.error) {
         vscode.window.showErrorMessage(result.message);
+      }
+      // if file is created successfully then create open the file
+      else {
+        const uri = vscode.Uri.file(filePath);
+        let doc = await vscode.workspace.openTextDocument(uri);
+        await vscode.window.showTextDocument(doc, { preview: false });
       }
     }
   }

@@ -18,7 +18,7 @@ async function renameFile(data) {
     if (input === undefined) return;
 
     const sourceUri = vscode.Uri.file(selectedData.label);
-    const targetUri = vscode.Uri.file(`${path.dirname(selectedData.label)}\\${input}`);
+    const targetUri = vscode.Uri.file(path.join(path.dirname(selectedData.label), input));
 
     console.log(sourceUri, targetUri);
     await vscode.workspace.fs.rename(sourceUri, targetUri);
@@ -26,7 +26,6 @@ async function renameFile(data) {
   catch (err) {
     throw new Error(err);
   }
-  // F:\file-manager\constants
 }
 
 module.exports = renameFile;

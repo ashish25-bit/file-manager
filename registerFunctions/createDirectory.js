@@ -2,6 +2,7 @@ const vscode = require("vscode");
 const getCurrentDirectoryFolders = require('../utils/getFolders');
 const createDirectory = require('../utils/createDirectory');
 const { PATTERN } = require('../constants');
+const path = require("path");
 
 const createDirectoryRegisterFunction = async function() {
   try {
@@ -30,7 +31,8 @@ const createDirectoryRegisterFunction = async function() {
 
     // creating new directories
     for (const directory of directories) {
-      const dirPath = `${selectedFolder.label}\\${directory}`;
+      // const dirPath = `${selectedFolder.label}\\${directory}`;
+      const dirPath = path.join(selectedFolder.label, directory);
       const result = await createDirectory(dirPath);
 
       if (result.error) {
