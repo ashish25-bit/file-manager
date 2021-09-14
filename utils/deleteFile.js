@@ -10,9 +10,11 @@ async function deleteFile(filePath) {
 
     const cmd = `${TERMINAL.delete[currOS]} ${filePath}`;
     await executeCommand(cmd);
+
+    return { error: false, message: null };
   }
   catch (err) {
-    throw new Error(err);
+    return { error: true, message: err.message };
   }
 }
 

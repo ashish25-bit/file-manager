@@ -11,21 +11,32 @@ const deleteFileRegisterFunction = async function() {
     const base = vscode.workspace.workspaceFolders[0].uri._fsPath;
     const files = await getCurrentDirectoryFiles(base);
 
-    const selectedFile = await vscode.window.showQuickPick(files, {
+    const selectedFiles = await vscode.window.showQuickPick(files, {
       matchOnDetail: true,
+      canPickMany: true
     });
 
-    if (selectedFile === undefined) return;
+    if (selectedFiles === undefined) return;
+
+    if (selectedFiles.length === 0) return;
+
+    const data = selectedFiles.map(f => f.label).join('\n');
 
     const confirmation = await vscode.window.showInformationMessage(
-      `${selectedFile.label} will be deleted permanentely. Press 'Confirm' to confirm deletion`,
+      `${data} will be deleted permanentely. Press 'Confirm' to confirm deletion`,
       ACTIONS_MSG.delete.confirm,
       ACTIONS_MSG.delete.cancel
     );
 
     if (confirmation !== ACTIONS_MSG.delete.confirm) return;
 
-    await deleteFile(selectedFile.label);
+    for (const selectedFile of selectedFiles) {
+      const result = await deleteFile(selectedFile.label);
+
+      if (result.error)
+        vscode.window.showErrorMessage(result.message);
+    }
+
   }
   catch (err) {
     vscode.window.showErrorMessage(err.message);

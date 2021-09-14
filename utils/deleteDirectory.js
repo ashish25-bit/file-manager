@@ -7,9 +7,10 @@ async function deleteDirectory(dirPath) {
 
     const cmd = `rmdir /q /s ${dirPath}`;
     await executeCommand(cmd);
+    return { error: false, message: null };
   }
   catch (err) {
-    throw new Error(err);
+    return { error: true, message: err.message };
   }
 }
 

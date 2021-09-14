@@ -14,21 +14,32 @@ const deleteDirectoryRegisterFunction = async function() {
     folders.shift();
 
     // getting the selected folder
-    const selectedFolder = await vscode.window.showQuickPick(folders, {
+    const selectedFolders = await vscode.window.showQuickPick(folders, {
       matchOnDetail: true,
+      canPickMany: true
     });
 
-    if (selectedFolder === undefined) return;
+    if (selectedFolders === undefined) return;
+
+    if (selectedFolders.length === 0) return;
+
+    const data = selectedFolders.map(f => f.label).join('\n');
 
     const confirmation = await vscode.window.showInformationMessage(
-      `${selectedFolder.label} will be deleted permanentely. Press 'Confirm' to confirm deletion`,
+      `${data} will be deleted permanentely. Press 'Confirm' to confirm deletion`,
       ACTIONS_MSG.delete.confirm,
       ACTIONS_MSG.delete.cancel
     );
 
     if (confirmation !== ACTIONS_MSG.delete.confirm) return;
 
-    await deleteDirectory(selectedFolder.label);
+    for (const selectedFolder of selectedFolders) {
+      const result = await deleteDirectory(selectedFolder.label);
+
+      if (result.error) {
+        vscode.window.showErrorMessage(result.message);
+      }
+    }
   }
   catch (err) {
     vscode.window.showErrorMessage(err.message);
