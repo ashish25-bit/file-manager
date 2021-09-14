@@ -42,7 +42,7 @@ const createFileRegisterFunction = async function () {
       }
 
       else {
-        const result = await createFile(filePath);
+        const result = await createFile(selectedFolder.label, file);
 
         if (result.error) {
           vscode.window.showErrorMessage(result.message);
