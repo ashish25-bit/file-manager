@@ -2,7 +2,7 @@
 	"name": "file-manager",
 	"displayName": "file-manager",
 	"description": "",
-	"version": "1.1.2",
+	"version": "1.5.4",
 	"engines": {
 		"vscode": "^1.60.0"
 	},
@@ -70,6 +70,26 @@
 			{
 				"command": "file.moveFile",
 				"title": "Move File"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "file.makeNewFile",
+				"key": "ctrl+q ctrl+n",
+				"mac": "cmd+q cmd+n"
+			},
+			{
+				"command": "file.createNewDirectory",
+				"key": "ctrl+q ctrl+d",
+				"mac": "cmd+q cmd+d"
+			},
+			{
+				"command": "file.deleteDirectory",
+				"key": "alt+d alt+d"
+			},
+			{
+				"command": "file.deleteFile",
+				"key": "alt+d alt+f"
 			}
 		]
 	},
