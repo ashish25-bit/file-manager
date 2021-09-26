@@ -5,6 +5,7 @@ async function renameFile(data, base) {
   try {
     const selectedData = await vscode.window.showQuickPick(data, {
       matchOnDetail: true,
+      title: "Select file/folder to be renamed."
     });
 
     if (selectedData === undefined) return;

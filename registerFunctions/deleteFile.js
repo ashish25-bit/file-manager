@@ -13,7 +13,8 @@ const deleteFileRegisterFunction = async function() {
 
     const selectedFiles = await vscode.window.showQuickPick(files, {
       matchOnDetail: true,
-      canPickMany: true
+      canPickMany: true,
+      title: "Select files for deleting"
     });
 
     if (selectedFiles === undefined) return;

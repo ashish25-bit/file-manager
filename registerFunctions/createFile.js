@@ -16,6 +16,7 @@ const createFileRegisterFunction = async function () {
     // getting the selected folder
     const selectedFolder = await vscode.window.showQuickPick(folders, {
       matchOnDetail: true,
+      title: "Select Folder (new file)"
     });
 
     if (selectedFolder === undefined) return;

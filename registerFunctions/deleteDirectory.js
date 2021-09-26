@@ -16,7 +16,8 @@ const deleteDirectoryRegisterFunction = async function() {
     // getting the selected folder
     const selectedFolders = await vscode.window.showQuickPick(folders, {
       matchOnDetail: true,
-      canPickMany: true
+      canPickMany: true,
+      title: "Select folders for deleting"
     });
 
     if (selectedFolders === undefined) return;
