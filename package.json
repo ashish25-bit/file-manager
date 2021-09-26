@@ -2,7 +2,7 @@
 	"name": "file-manager",
 	"displayName": "file-manager",
 	"description": "",
-	"version": "1.5.4",
+	"version": "1.6.4",
 	"engines": {
 		"vscode": "^1.60.0"
 	},
@@ -34,7 +34,8 @@
 		"onCommand:file.renameFile",
 		"onCommand:file.renameDirectory",
 		"onCommand:file.moveFile",
-		"onCommand:file.moveDirectory"
+		"onCommand:file.moveDirectory",
+		"onCommand:file.renameCurrentFile"
 	],
 	"main": "./extension.js",
 	"contributes": {
@@ -64,6 +65,10 @@
 				"title": "Rename Directory"
 			},
 			{
+				"command": "file.renameCurrentFile",
+				"title": "Rename Current File"
+			},
+			{
 				"command": "file.moveDirectory",
 				"title": "Move Directory"
 			},
@@ -90,6 +95,11 @@
 			{
 				"command": "file.deleteFile",
 				"key": "alt+d alt+f"
+			},
+			{
+				"command": "file.renameCurrentFile",
+				"key": "ctrl+f2",
+				"mac": "cmd+f2"
 			}
 		]
 	},

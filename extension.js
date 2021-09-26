@@ -7,6 +7,7 @@ const deleteDirectoryRegisterFunction = require('./registerFunctions/deleteDirec
 const deleteFileRegisterFunction = require('./registerFunctions/deleteFile');
 const renameFileRegisterFunction = require('./registerFunctions/renameFile');
 const renameDirectoryRegisterFunction = require('./registerFunctions/renameDirectory');
+const renameCurrentFileRegisterFunction = require("./registerFunctions/renameCurrentFile");
 const moveFileOrDirectory = require("./utils/moveFileOrDirectory");
 
 /**
@@ -45,6 +46,11 @@ async function activate(context) {
     renameDirectoryRegisterFunction
   )
 
+  let renameCurrentFile = vscode.commands.registerCommand(
+    "file.renameCurrentFile",
+    renameCurrentFileRegisterFunction
+  )
+
   let moveFileDisposable = vscode.commands.registerCommand(
     "file.moveFile",
     async function() {
@@ -81,6 +87,7 @@ async function activate(context) {
   context.subscriptions.push(deleteFileDisposable);
   context.subscriptions.push(renameFileDisposable);
   context.subscriptions.push(renameDirectoryDisposable);
+  context.subscriptions.push(renameCurrentFile);
   context.subscriptions.push(moveFileDisposable);
   context.subscriptions.push(moveDirectoryDisposable);
 }
