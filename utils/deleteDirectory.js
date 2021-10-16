@@ -1,12 +1,12 @@
-const { PATTERN } = require('../constants');
-const executeCommand = require('./executeCommand');
+const vscode = require("vscode");
 
 async function deleteDirectory(dirPath) {
   try {
-    dirPath = dirPath.replace(PATTERN.backwardSlash, '\\\\');
+    const targetUri = vscode.Uri.file(dirPath);
+    await vscode.workspace.fs.delete(targetUri, {
+      recursive: true
+    });
 
-    const cmd = `rmdir /q /s ${dirPath}`;
-    await executeCommand(cmd);
     return { error: false, message: null };
   }
   catch (err) {

@@ -1,15 +1,9 @@
-const { TERMINAL } = require('../constants');
-const executeCommand = require('./executeCommand');
+const vscode = require("vscode");
 
 async function deleteFile(filePath) {
   try {
-    const currOS = process.platform;
-
-    if (!TERMINAL.delete.hasOwnProperty(currOS))
-      throw new Error(`${currOS} is not supported yet`);
-
-    const cmd = `${TERMINAL.delete[currOS]} ${filePath}`;
-    await executeCommand(cmd);
+    const targetUri = vscode.Uri.file(filePath);
+    await vscode.workspace.fs.delete(targetUri);
 
     return { error: false, message: null };
   }

@@ -2,7 +2,7 @@
 	"name": "file-manager",
 	"displayName": "file-manager",
 	"description": "",
-	"version": "1.6.4",
+	"version": "1.6.5",
 	"engines": {
 		"vscode": "^1.60.0"
 	},
