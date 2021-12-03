@@ -1,3 +1,4 @@
+const path = require("path");
 const vscode = require("vscode");
 const { ACTIONS_MSG, TERMINAL } = require("../constants");
 const executeCommand = require("./executeCommand");
@@ -65,10 +66,17 @@ async function moveFileOrDirectory(type = ACTIONS_MSG.moveType.folder) {
 
     if (destinationSelected === undefined) return;
 
-    // moving the file
-    const currOS = process.platform;
-    const cmd = `${TERMINAL.move[currOS]} ${sourceSelected.label} ${destinationSelected.label}`;
-    await executeCommand(cmd);
+    const sourceUri = vscode.Uri.file(sourceSelected.label);
+    let fileName = path.basename(sourceSelected.label);
+    fileName = path.join(destinationSelected.label, fileName);
+    let targetUri = vscode.Uri.file(fileName);
+
+    await vscode.workspace.fs.copy(sourceUri, targetUri, { overwrite: false });
+
+    if (type === ACTIONS_MSG.moveType.file)
+      await vscode.workspace.fs.delete(sourceUri);
+    else
+      await vscode.workspace.fs.delete(sourceUri, { recursive: true });
   }
   catch (err) {
     throw new Error(err);
